@@ -118,7 +118,7 @@ export const RegisterScreen = ({ onNavigateToLogin }: RegisterScreenProps) => {
             <Text className="text-lg text-gray-600" style={{ fontFamily: 'Inter-Medium' }}>Already have an account? </Text>
             <TouchableOpacity onPress={onNavigateToLogin}>
               <Text
-                className="font-semibold text-lg text-[#1B365D]"
+                className="font-semibold text-lg text-[#3c86e7ff]"
                 style={{ textDecorationLine: 'underline' }}>
                 Login
               </Text>
