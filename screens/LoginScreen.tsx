@@ -100,7 +100,7 @@ export const LoginScreen = ({ onNavigateToRegister, onNavigateToPending, onNavig
         style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}
       >
         <Image
-          source={require('../assets/logo/logo.png')}
+          source={require('../assets/logo/logo_main.png')}
           style={{ width: 200, height: 200 }}
           resizeMode="contain"
         />
@@ -156,16 +156,16 @@ export const LoginScreen = ({ onNavigateToRegister, onNavigateToPending, onNavig
         </Button>
         <TouchableOpacity onPress={handleForgotPassword} className="mt-6 items-center">
           <Text
-            className="font-semibold text-lg text-[#1B365D]"
+            className="font-semibold text-lg text-[#3c86e7ff]"
             style={{ textDecorationLine: 'underline' , marginTop: 10}}>
             Forgot Password?
           </Text>
         </TouchableOpacity>
         <View className="mt-6 flex-row items-center justify-center" style={{ marginTop: 15 }}>
-          <Text className="text-lg text-gray-600"   style={{ fontFamily: 'Inter-Medium' }}>Become a Sentinel? </Text>
+          <Text className="text-lg text-gray-600"   style={{ fontFamily: 'Inter-Medium' }}>Become a Resident? </Text>
           <TouchableOpacity onPress={handleRegister} >
             <Text
-              className="font-semibold text-lg text-[#1B365D]"
+              className="font-semibold text-lg text-[#3c86e7ff]"
               style={{ textDecorationLine: 'underline' }}>
               Register
             </Text>
