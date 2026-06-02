@@ -194,9 +194,9 @@ export const HomeScreen = () => {
           <TouchableOpacity 
             onPress={toggleDrawer} 
             activeOpacity={0.6}
-            style={{ marginRight: 16, padding: 4 }}
+            style={{ marginRight: 10, padding: 4 }}
           >
-            <Menu size={26} color="#1B365D" strokeWidth={2} />
+            <Menu size={26} color="#252629ff" strokeWidth={2} />
           </TouchableOpacity>
           
           <Image
@@ -212,13 +212,13 @@ export const HomeScreen = () => {
             onPress={() => navigateToTab('announcements')}
             className="relative p-1"
           >
-            <Bell size={26} color="#1B365D" strokeWidth={2} />
+            <Bell size={26} color="#1a1c1fff" strokeWidth={2} />
             {unreadCount > 0 && (
               <View
                 style={{
                   position: 'absolute',
                   top: -2,
-                  right: -9,
+                  right: -6,
                   backgroundColor: '#EF4444',
                   borderRadius: 10,
                   paddingHorizontal: 5,
@@ -241,7 +241,7 @@ export const HomeScreen = () => {
           <TouchableOpacity
             onPress={() => navigateToTab('profile')}
             style={{
-                shadowColor: '#1B365D',
+                shadowColor: '#3c86e7ff',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.2,
                 shadowRadius: 5,
@@ -254,7 +254,7 @@ export const HomeScreen = () => {
                 resizeMode="cover"
               />
             ) : (
-              <View className="bg-[#1B365D] rounded-full w-10 h-10 items-center justify-center border-2 border-gray-50">
+              <View className="bg-[#3c86e7ff] rounded-full w-10 h-10 items-center justify-center border-2 border-gray-50">
                 <Text className="text-white font-bold" style={{ fontSize: 15 }}>
                   {user?.firstName?.charAt(0) || 'U'}
                 </Text>
@@ -274,7 +274,7 @@ export const HomeScreen = () => {
           <Path
             d={d}
             fill="white"
-            stroke="#0934755f"
+            stroke="#3c86e7ff"
             strokeWidth="1.5"
           />
         </Svg>
@@ -286,25 +286,25 @@ export const HomeScreen = () => {
           paddingBottom: Platform.OS === 'ios' ? 30 : 15
         }}>
           <TouchableOpacity onPress={() => navigateToTab('home')} className="flex-1 items-center">
-            <Home size={22} color={activeTab === 'home' ? '#1B365D' : '#9CA3AF'} strokeWidth={activeTab === 'home' ? 2.5 : 2} />
-            <Text style={{ color: activeTab === 'home' ? '#1B365D' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'home' ? '700' : '500' }}>Home</Text>
+            <Home size={22} color={activeTab === 'home' ? '#3c86e7ff' : '#9CA3AF'} strokeWidth={activeTab === 'home' ? 2.5 : 2} />
+            <Text style={{ color: activeTab === 'home' ? '#3c86e7ff' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'home' ? '700' : '500' }}>Home</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigateToTab('history')} className="flex-1 items-center">
-            <History size={22} color={activeTab === 'history' ? '#1B365D' : '#9CA3AF'} strokeWidth={activeTab === 'history' ? 2.5 : 2} />
-            <Text style={{ color: activeTab === 'history' ? '#1B365D' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'history' ? '700' : '500' }}>History</Text>
+            <History size={22} color={activeTab === 'history' ? '#3c86e7ff' : '#9CA3AF'} strokeWidth={activeTab === 'history' ? 2.5 : 2} />
+            <Text style={{ color: activeTab === 'history' ? '#3c86e7ff' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'history' ? '700' : '500' }}>History</Text>
           </TouchableOpacity>
 
           <View style={{ width: 80 }} />
 
           <TouchableOpacity onPress={() => navigateToTab('map')} className="flex-1 items-center">
-            <MapPinned size={22} color={activeTab === 'map' ? '#1B365D' : '#9CA3AF'} strokeWidth={activeTab === 'map' ? 2.5 : 2} />
-            <Text style={{ color: activeTab === 'map' ? '#1B365D' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'map' ? '700' : '500' }}>Map</Text>
+            <MapPinned size={22} color={activeTab === 'map' ? '#3c86e7ff' : '#9CA3AF'} strokeWidth={activeTab === 'map' ? 2.5 : 2} />
+            <Text style={{ color: activeTab === 'map' ? '#3c86e7ff' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'map' ? '700' : '500' }}>Map</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigateToTab('profile')} className="flex-1 items-center">
-            <User size={22} color={activeTab === 'profile' ? '#1B365D' : '#9CA3AF'} strokeWidth={activeTab === 'profile' ? 2.5 : 2} />
-            <Text style={{ color: activeTab === 'profile' ? '#1B365D' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'profile' ? '700' : '500' }}>Profile</Text>
+            <User size={22} color={activeTab === 'profile' ? '#3c86e7ff' : '#9CA3AF'} strokeWidth={activeTab === 'profile' ? 2.5 : 2} />
+            <Text style={{ color: activeTab === 'profile' ? '#3c86e7ff' : '#9CA3AF', fontSize: 10, marginTop: 5, fontWeight: activeTab === 'profile' ? '700' : '500' }}>Profile</Text>
           </TouchableOpacity>
         </View>
 
@@ -321,7 +321,7 @@ export const HomeScreen = () => {
         >
           <View
             style={{
-              backgroundColor: '#345d97', // Lighter Blue than #1B365D
+              backgroundColor: '#3c86e7ff', // Lighter Blue than #1B365D
               width: 60,
               height: 60,
               borderRadius: 32,
