@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
 import { useState } from 'react';
 import { useAuth } from '../../context';
-import { Mail, Phone, MapPin, FileText, Camera, LogOut, CheckCircle, Shield, AlertTriangle, X, Users, BadgeCheck, QrCode } from 'lucide-react-native';
+import { Mail, Phone, MapPin, FileText, Camera, LogOut, Shield, AlertTriangle, X, Users, BadgeCheck, QrCode } from 'lucide-react-native';
 
 interface ProfileTabProps {
   navigation?: any;
@@ -31,7 +31,7 @@ export const ProfileTab = ({ navigation }: ProfileTabProps) => {
   if (!user) {
     return (
       <ScrollView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
-        <View style={{ backgroundColor: '#1B365D', paddingTop: 60, paddingBottom: 40, paddingHorizontal: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+        <View style={{ backgroundColor: '#3c86e7ff', paddingTop: 60, paddingBottom: 40, paddingHorizontal: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
           <View style={{ alignItems: 'center' }}>
             <View style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: 'rgba(255,255,255,0.3)', marginBottom: 16 }} />
             <View style={{ width: 180, height: 24, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.3)', marginBottom: 12 }} />
@@ -64,7 +64,7 @@ export const ProfileTab = ({ navigation }: ProfileTabProps) => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#F9FAFB' }}>
       {/* Header */}
-      <View style={{ backgroundColor: '#1B365D', paddingTop: 60, paddingBottom: 40, paddingHorizontal: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20, position: 'relative' }}>
+      <View style={{ backgroundColor: '#3c86e7ff', paddingTop: 60, paddingBottom: 40, paddingHorizontal: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20, position: 'relative' }}>
         {/* QR Code Button - Top Right */}
         <TouchableOpacity 
           onPress={() => navigation?.navigate('qr')}
