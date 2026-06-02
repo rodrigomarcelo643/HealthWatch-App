@@ -1,11 +1,10 @@
-import { View, Text, TouchableOpacity, Dimensions, Platform, Animated, Image, Modal, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Animated, Image, Modal } from 'react-native';
 import { useState } from 'react';
-import { Users, LogOut, AlertTriangle, Phone, Briefcase, Megaphone, UserCheck, Award } from 'lucide-react-native';
+import { Users, LogOut, AlertTriangle, Phone, Briefcase, Megaphone, UserCheck, Award, X, ChevronRight } from 'lucide-react-native';
 import { useAuth } from '../../context';
 import { useAnnouncements } from '../../context/AnnouncementContext';
-import { Button } from './Button';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 interface DrawerProps {
   isOpen: boolean;
@@ -18,7 +17,67 @@ interface DrawerProps {
   onNavigateToEmergencyContacts?: () => void;
 }
 
-export const Drawer = ({ isOpen, onClose, drawerAnim, onNavigateToAnnouncements, onNavigateToCommunity, onNavigateToOutbreaks, onNavigateToBHWDirectory, onNavigateToEmergencyContacts }: DrawerProps) => {
+interface MenuItemProps {
+  icon: React.ReactNode;
+  label: string;
+  onPress?: () => void;
+  badge?: number;
+  isDanger?: boolean;
+}
+
+const MenuItem = ({ icon, label, onPress, badge, isDanger }: MenuItemProps) => (
+  <TouchableOpacity 
+    onPress={onPress} 
+    style={{ 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+      borderRadius: 12,
+      marginBottom: 4
+    }}
+  >
+    <View style={{ width: 24, marginRight: 16 }}>
+      {icon}
+    </View>
+    <Text style={{ 
+      flex: 1, 
+      fontSize: 15, 
+      fontWeight: '500',
+      color: isDanger ? '#DC2626' : '#374151'
+    }}>
+      {label}
+    </Text>
+    {badge ? (
+      <View style={{ 
+        backgroundColor: '#EF4444', 
+        borderRadius: 12, 
+        minWidth: 24, 
+        height: 24, 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        paddingHorizontal: 6
+      }}>
+        <Text style={{ color: 'white', fontSize: 12, fontWeight: '700' }}>
+          {badge > 99 ? '99+' : badge}
+        </Text>
+      </View>
+    ) : (
+      <ChevronRight size={18} color="#D1D5DB" strokeWidth={1.5} />
+    )}
+  </TouchableOpacity>
+);
+
+export const Drawer = ({ 
+  isOpen, 
+  onClose, 
+  drawerAnim, 
+  onNavigateToAnnouncements, 
+  onNavigateToCommunity, 
+  onNavigateToOutbreaks, 
+  onNavigateToBHWDirectory, 
+  onNavigateToEmergencyContacts 
+}: DrawerProps) => {
   const { user, logout } = useAuth();
   const { unreadCount } = useAnnouncements();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -30,131 +89,253 @@ export const Drawer = ({ isOpen, onClose, drawerAnim, onNavigateToAnnouncements,
 
   return (
     <>
+      {/* Overlay - only show when open */}
       {isOpen && (
         <TouchableOpacity 
           activeOpacity={1}
           onPress={onClose}
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100 }}
+          style={{ 
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            backgroundColor: 'rgba(0,0,0,0.4)', 
+            zIndex: 100 
+          }}
         />
       )}
 
+      {/* Drawer - always rendered but positioned off-screen when closed */}
       <Animated.View 
         style={{ 
           position: 'absolute', 
           top: 0, 
           left: 0, 
           bottom: 0, 
-          width: width * 0.7, 
-          backgroundColor: 'white',
+          width: width * 0.70, 
+          backgroundColor: '#FFFFFF',
+          // CRITICAL FIX: Push drawer completely off-screen when closed
           transform: [{ translateX: drawerAnim }],
           zIndex: 101,
           shadowColor: '#000',
-          shadowOffset: { width: 2, height: 0 },
-          shadowOpacity: 0.25,
-          shadowRadius: 8,
-          elevation: 5
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.1,
+          shadowRadius: 20,
+          elevation: 8
         }}
       >
-        <View style={{ paddingTop: (StatusBar.currentHeight || 0) + 50, paddingHorizontal: 20, paddingBottom: 16, backgroundColor: '#1B365D' }}>
-          <View className="flex-row items-center">
+        {/* Close Button */}
+        <TouchableOpacity 
+          onPress={onClose}
+          style={{ 
+            position: 'absolute', 
+            top: 16, 
+            right: 16, 
+            zIndex: 1,
+            width: 36,
+            height: 36,
+            borderRadius: 18,
+            backgroundColor: 'rgba(0,0,0,0.05)',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <X size={20} color="#6B7280" strokeWidth={2} />
+        </TouchableOpacity>
+
+        {/* Profile Section */}
+        <View style={{ 
+          paddingTop: 60,
+          paddingBottom: 24,
+          paddingHorizontal: 20,
+          backgroundColor: '#F8FAFC'
+        }}>
+          <View style={{ alignItems: 'center' }}>
             {user?.documents?.selfieUrl ? (
               <Image 
                 source={{ uri: user.documents.selfieUrl }} 
-                style={{ width: 48, height: 48, borderRadius: 24, borderWidth: 2, borderColor: 'white', marginRight: 12 }}
+                style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 12 }}
                 resizeMode="cover"
               />
             ) : (
-              <View className="bg-white rounded-full w-12 h-12 items-center justify-center mr-3">
-                <Text className="text-[#1B365D] font-bold text-xl" style={{ fontFamily: 'Inter-SemiBold' }}>
+              <View style={{ 
+                backgroundColor: '#1B365D', 
+                borderRadius: 40, 
+                width: 80, 
+                height: 80, 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                marginBottom: 12
+              }}>
+                <Text style={{ color: 'white', fontWeight: '600', fontSize: 32 }}>
                   {user?.firstName?.charAt(0) || 'U'}
                 </Text>
               </View>
             )}
-            <View>
-              <Text className="text-white font-semibold text-base" style={{ fontFamily: 'Inter-SemiBold' }}>
-                {user?.firstName} {user?.lastName}
+            
+            <Text style={{ fontSize: 18, fontWeight: '700', color: '#1F2937', marginBottom: 4 }}>
+              {user?.firstName} {user?.lastName}
+            </Text>
+            
+            <View style={{ 
+              flexDirection: 'row', 
+              alignItems: 'center',
+              backgroundColor: '#E5E7EB',
+              paddingHorizontal: 12,
+              paddingVertical: 4,
+              borderRadius: 20
+            }}>
+              <Briefcase size={14} color="#6B7280" strokeWidth={2} />
+              <Text style={{ color: '#6B7280', fontSize: 12, marginLeft: 6 }}>
+                {user?.communityRole || 'Resident'}
               </Text>
-              <View className="flex-row items-center mt-0.5">
-                <Briefcase size={12} color="rgba(255,255,255,0.7)" strokeWidth={2} />
-                <Text className="text-white/70 text-xs ml-1" style={{ fontFamily: 'Inter-Medium' }}>
-                  {user?.communityRole || 'Resident'}
-                </Text>
-              </View>
             </View>
           </View>
-          
+
           {/* Trust Score */}
-          <View style={{ marginTop: 12, backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 12, padding: 10 }}>
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <Award size={20} color="#FFD700" strokeWidth={2} />
-                <Text className="text-white font-semibold text-sm ml-2" style={{ fontFamily: 'Inter-SemiBold' }}>Trust Score</Text>
+          <View style={{ 
+            marginTop: 20, 
+            backgroundColor: 'white', 
+            borderRadius: 16, 
+            padding: 12,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.05,
+            shadowRadius: 2,
+            elevation: 1
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Award size={16} color="#F59E0B" strokeWidth={2} />
+                <Text style={{ color: '#374151', fontSize: 13, fontWeight: '600', marginLeft: 8 }}>Trust Score</Text>
               </View>
-              <Text className="text-white font-bold text-xl" style={{ fontFamily: 'Inter-SemiBold' }}>85</Text>
+              <Text style={{ color: '#1B365D', fontWeight: '800', fontSize: 18 }}>85</Text>
             </View>
-            <View style={{ marginTop: 6, backgroundColor: 'rgba(255,255,255,0.2)', height: 6, borderRadius: 3, overflow: 'hidden' }}>
-              <View style={{ width: '85%', height: '100%', backgroundColor: '#FFD700' }} />
+            <View style={{ backgroundColor: '#F3F4F6', height: 6, borderRadius: 3, overflow: 'hidden' }}>
+              <View style={{ width: '85%', height: '100%', backgroundColor: '#F59E0B', borderRadius: 3 }} />
             </View>
           </View>
         </View>
 
-        <View className="flex-1 px-4 py-6">
-          <TouchableOpacity onPress={onNavigateToAnnouncements} className="flex-row items-center py-3 px-4 rounded-lg">
-            <Megaphone size={22} color="#1B365D" strokeWidth={2} />
-            <Text className="text-[#1B365D] text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>Announcements</Text>
-            {unreadCount > 0 && (
-              <View style={{ backgroundColor: '#EF4444', borderRadius: 10, minWidth: 20, height: 20, alignItems: 'center', justifyContent: 'center', marginLeft: 'auto' }}>
-                <Text style={{ color: 'white', fontSize: 12, fontWeight: '700' }}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+        {/* Menu Items */}
+        <View style={{ flex: 1, paddingHorizontal: 12, paddingTop: 20 }}>
+          <MenuItem 
+            icon={<Megaphone size={20} color="#1B365D" strokeWidth={2} />}
+            label="Announcements"
+            onPress={onNavigateToAnnouncements}
+            badge={unreadCount}
+          />
 
-          <TouchableOpacity onPress={onNavigateToCommunity} className="flex-row items-center py-3 px-4 rounded-lg">
-            <Users size={22} color="#1B365D" strokeWidth={2} />
-            <Text className="text-[#1B365D] text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>Community</Text>
-          </TouchableOpacity>
+          <MenuItem 
+            icon={<Users size={20} color="#1B365D" strokeWidth={2} />}
+            label="Community"
+            onPress={onNavigateToCommunity}
+          />
 
-          <TouchableOpacity onPress={onNavigateToOutbreaks} className="flex-row items-center py-3 px-4 rounded-lg">
-            <AlertTriangle size={22} color="#1B365D" strokeWidth={2} />
-            <Text className="text-[#1B365D] text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>Recent Outbreaks</Text>
-          </TouchableOpacity>
+          <MenuItem 
+            icon={<AlertTriangle size={20} color="#1B365D" strokeWidth={2} />}
+            label="Recent Outbreaks"
+            onPress={onNavigateToOutbreaks}
+          />
 
-          <TouchableOpacity onPress={onNavigateToBHWDirectory} className="flex-row items-center py-3 px-4 rounded-lg">
-            <UserCheck size={22} color="#1B365D" strokeWidth={2} />
-            <Text className="text-[#1B365D] text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>BHW Directory</Text>
-          </TouchableOpacity>
+          <MenuItem 
+            icon={<UserCheck size={20} color="#1B365D" strokeWidth={2} />}
+            label="BHW Directory"
+            onPress={onNavigateToBHWDirectory}
+          />
 
-          <TouchableOpacity onPress={onNavigateToEmergencyContacts} className="flex-row items-center py-3 px-4 rounded-lg">
-            <Phone size={22} color="#1B365D" strokeWidth={2} />
-            <Text className="text-[#1B365D] text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>Emergency Contacts</Text>
-          </TouchableOpacity>
+          <MenuItem 
+            icon={<Phone size={20} color="#1B365D" strokeWidth={2} />}
+            label="Emergency Contacts"
+            onPress={onNavigateToEmergencyContacts}
+          />
 
-          <View className="border-t border-gray-200 my-3" />
+          <View style={{ height: 1, backgroundColor: '#F3F4F6', marginVertical: 16, marginHorizontal: 8 }} />
 
-          <TouchableOpacity onPress={() => setShowLogoutModal(true)} className="flex-row items-center py-3 px-4 rounded-lg">
-            <LogOut size={22} color="#EF4444" strokeWidth={2} />
-            <Text className="text-red-500 text-base ml-4" style={{ fontFamily: 'Inter-Medium' }}>Logout</Text>
-          </TouchableOpacity>
+          <MenuItem 
+            icon={<LogOut size={20} color="#DC2626" strokeWidth={2} />}
+            label="Logout"
+            onPress={() => setShowLogoutModal(true)}
+            isDanger
+          />
+        </View>
+
+        {/* Footer */}
+        <View style={{ 
+          paddingVertical: 20, 
+          alignItems: 'center',
+          borderTopWidth: 1,
+          borderTopColor: '#F3F4F6'
+        }}>
+          <Text style={{ color: '#9CA3AF', fontSize: 11 }}>
+            Version 1.0.0
+          </Text>
         </View>
       </Animated.View>
 
       {/* Logout Confirmation Modal */}
       <Modal visible={showLogoutModal} transparent animationType="fade">
-        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-          <View style={{ backgroundColor: 'white', borderRadius: 16, padding: 24, width: '100%', maxWidth: 400 }}>
-            <View style={{ alignItems: 'center', marginBottom: 20 }}>
-              <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: '#FEE2E2', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
-                <AlertTriangle size={28} color="#DC2626" strokeWidth={2} />
-              </View>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#1F2937', fontFamily: 'Inter-SemiBold', marginBottom: 8 }}>Logout Confirmation</Text>
-              <Text style={{ fontSize: 14, color: '#6B7280', textAlign: 'center', fontFamily: 'Inter-Medium' }}>Are you sure you want to logout?</Text>
+        <View style={{ 
+          flex: 1, 
+          backgroundColor: 'rgba(0,0,0,0.5)', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          padding: 20 
+        }}>
+          <View style={{ 
+            backgroundColor: 'white', 
+            borderRadius: 20, 
+            padding: 24, 
+            width: '100%', 
+            maxWidth: 320,
+            alignItems: 'center'
+          }}>
+            <View style={{ 
+              width: 48, 
+              height: 48, 
+              borderRadius: 24, 
+              backgroundColor: '#FEE2E2', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              marginBottom: 16 
+            }}>
+              <AlertTriangle size={24} color="#DC2626" strokeWidth={2} />
             </View>
-            <View style={{ flexDirection: 'row', gap: 12 }}>
-              <TouchableOpacity onPress={() => setShowLogoutModal(false)} style={{ flex: 1, backgroundColor: '#F3F4F6', borderRadius: 12, padding: 14, alignItems: 'center' }}>
-                <Text style={{ color: '#4B5563', fontSize: 15, fontWeight: '600', fontFamily: 'Inter-SemiBold' }}>Cancel</Text>
+            
+            <Text style={{ fontSize: 18, fontWeight: '700', color: '#1F2937', marginBottom: 8 }}>
+              Sign Out
+            </Text>
+            
+            <Text style={{ fontSize: 14, color: '#6B7280', textAlign: 'center', marginBottom: 24 }}>
+              Are you sure you want to sign out?
+            </Text>
+            
+            <View style={{ flexDirection: 'row', gap: 12, width: '100%' }}>
+              <TouchableOpacity 
+                onPress={() => setShowLogoutModal(false)} 
+                style={{ 
+                  flex: 1, 
+                  backgroundColor: '#F3F4F6', 
+                  borderRadius: 12, 
+                  paddingVertical: 12, 
+                  alignItems: 'center' 
+                }}
+              >
+                <Text style={{ color: '#4B5563', fontSize: 15, fontWeight: '600' }}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleLogout} style={{ flex: 1, backgroundColor: '#DC2626', borderRadius: 12, padding: 14, alignItems: 'center' }}>
-                <Text style={{ color: 'white', fontSize: 15, fontWeight: '600', fontFamily: 'Inter-SemiBold' }}>Logout</Text>
+              
+              <TouchableOpacity 
+                onPress={handleLogout} 
+                style={{ 
+                  flex: 1, 
+                  backgroundColor: '#DC2626', 
+                  borderRadius: 12, 
+                  paddingVertical: 12, 
+                  alignItems: 'center' 
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 15, fontWeight: '600' }}>Sign Out</Text>
               </TouchableOpacity>
             </View>
           </View>
