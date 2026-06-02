@@ -11,9 +11,9 @@ export function Button({ variant = 'primary', size = 'md', children, className =
   const baseStyles = 'rounded-lg items-center justify-center';
   
   const variantStyles = {
-    primary: 'bg-[#1B365D] active:bg-[#152a4a]',
+    primary: 'bg-[#3c86e7ff] active:bg-[#154ea1ff] active:border-[#154ea1ff]',
     secondary: 'bg-gray-600 active:bg-gray-700',
-    outline: 'border-2 border-[#1B365D] active:bg-blue-50',
+    outline: 'border-2 border-blue-500 active:bg-blue-50',
   };
   
   const sizeStyles = {
