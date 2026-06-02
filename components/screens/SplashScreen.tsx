@@ -27,7 +27,7 @@ export const SplashScreen = () => {
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
       <View style={{ alignItems: 'center' }}>
         <Image
-          source={require('../../assets/logo/logo.png')}
+          source={require('../../assets/logo/logo_main.png')}
           style={{
             width: Math.min(width * 0.6, 200),
             height: Math.min(width * 0.6, 200),
