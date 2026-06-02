@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 interface PendingApprovalScreenProps {
   onBackToLogin: () => void;
 }
-
+// Skeleton Load UI
 const SkeletonLoader = () => {
   const shimmer = useRef(new Animated.Value(0)).current;
 
@@ -49,6 +49,7 @@ export const PendingApprovalScreen = ({ onBackToLogin }: PendingApprovalScreenPr
 
   return (
     <ScrollView className="flex-1 bg-white">
+      {/** Parent Display of Approval Section */}
       <View className="px-6 py-8">
         <View className="items-center mb-8">
           <View className="bg-yellow-100 rounded-full p-6 mb-4">
