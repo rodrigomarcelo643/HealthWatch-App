@@ -14,7 +14,7 @@ export const StepIndicator = ({ currentStep, totalSteps, steps }: StepIndicatorP
           <View key={index} className="flex-row items-center">
             <View
               className={`w-10 h-10 rounded-full items-center justify-center ${
-                index + 1 <= currentStep ? 'bg-[#1B365D]' : 'bg-gray-300'
+                index + 1 <= currentStep ? 'bg-[#3c86e7ff]' : 'bg-gray-300'
               }`}
             >
               <Text
