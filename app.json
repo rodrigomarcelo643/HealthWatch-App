@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sentinel-ph",
-    "slug": "sentinel-ph",
+    "name": "HealthWatch",
+    "slug": "HealthWatch",
     "version": "1.0.0",
     "web": {
       "favicon": "./assets/favicon.png",
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/logo/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.marcelo12345.sentinelph",
+      "package": "com.marcelo12345.healthwatch",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.ACCESS_FINE_LOCATION",
