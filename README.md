@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./assets/logo/logo.png" alt="SentinelPH Logo" width="300"/>
-  <h1>SentinelPH Mobile App: Community Intelligence Network for Early Outbreak Detection</h1>
+  <h1>HealthWatch Mobile App: Community Intelligence Network for Early Outbreak Detection</h1>
 </div>
 
 <div align="center">
